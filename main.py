@@ -54,7 +54,6 @@ if argv[1] == "load-onus":
             print(f"[{datetime.today()}] Error: {err}")
             continue
         
-        break
 
 else: 
     print("Informe uma ação válida!")
