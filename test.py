@@ -12,12 +12,3 @@ from Connection.ftp import FTPService
 # Carregando variáveis de ambiente.
 from Config.env import EnvConfig
 EnvConfig().load_env()
-
-# Criando Class Methods
-methodFtp = FTPMethods()
-                    
-# Criando conexão
-ftp_connection = FTPService().connection()
-
-files = methodFtp.get_files_lists(service=ftp_connection);
-methodFtp.remove_file(service=ftp_connection, files=files);

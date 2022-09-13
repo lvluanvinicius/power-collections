@@ -115,9 +115,9 @@ class FTPMethods(object):
                 
                 # Verificando se o arquivo existe para ser excluído no diretório do storage/data.
                 if ph.isfile(f"{self.STORAGEDIR}/{self.LOCALFILE}"):
-                    
                     # Excluindo no diretório storage/data.
-                    unlink(f"{self.STORAGEDIR}/{self.LOCALFILE}")
+                    unlink(f"{self.STORAGEDIR}/{self.LOCALFILE}")               
+                    
                     
             except Exception as err:
                 print(f"[{datetime.today()}] Error: {err}")

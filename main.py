@@ -45,21 +45,22 @@ if argv[1] == "load-onus":
                 svo = SaveONUs()
                 # Salvando os dados na base de dados.
                 svo.save_onus(fileName=methodFtp.LOCALFILE)
-                print(f"[{datetime.today()}] Success: Coleta salva com sucesso!")
-                
-                # Realizando a exclusão dos arquivos antigos.
-                try:
-                    # Buscando a lista de arquivos.
-                    files = methodFtp.get_files_lists(service=ftp_connection);
-                    
-                    # Realizando a remoção.
-                    methodFtp.remove_file(service=ftp_connection, files=files);
-                    
-                except Exception as err:
-                    print(f"[{datetime.today()}] Error: {err}")
+                print(f"[{datetime.today()}] Success: Coleta salva com sucesso!")                
                                 
             else:            
-                print(f"[{datetime.today()}] Success: Nenhuma coleta encontrada!")            
+                print(f"[{datetime.today()}] Success: Nenhuma coleta encontrada!")    
+                
+            # Realizando a exclusão dos arquivos antigos.
+            try:
+                # Buscando a lista de arquivos.
+                files = methodFtp.get_files_lists(service=ftp_connection);
+                
+                # Realizando a remoção.
+                methodFtp.remove_file(service=ftp_connection, files=files);
+                
+            except Exception as err:
+                print(f"[{datetime.today()}] Error: {err}")  
+                      
             
         except Exception as err:
             print(f"[{datetime.today()}] Error: {err}")
