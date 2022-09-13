@@ -32,7 +32,7 @@ if argv[1] == "load-onus":
             # Carregando Nome do Arquivo de acordo com o ultimo adicionado.
             methodFtp.LOCALFILE = methodFtp.get_file_name(service=ftp_connection)
             
-            
+            # Comparando se o arquivo já existe.
             if not methodFtp.compare_file():
                 # Realizando o Download do último arquivo de backup.
                 methodFtp.download_file(service=ftp_connection)
@@ -46,6 +46,17 @@ if argv[1] == "load-onus":
                 # Salvando os dados na base de dados.
                 svo.save_onus(fileName=methodFtp.LOCALFILE)
                 print(f"[{datetime.today()}] Success: Coleta salva com sucesso!")
+                
+                # Realizando a exclusão dos arquivos antigos.
+                try:
+                    # Buscando a lista de arquivos.
+                    files = methodFtp.get_files_lists(service=ftp_connection);
+                    
+                    # Realizando a remoção.
+                    methodFtp.remove_file(service=ftp_connection, files=files);
+                    
+                except Exception as err:
+                    print(f"[{datetime.today()}] Error: {err}")
                                 
             else:            
                 print(f"[{datetime.today()}] Success: Nenhuma coleta encontrada!")            

@@ -1,4 +1,4 @@
-from os import getenv, path as ph, remove
+from os import getenv, path as ph, remove, unlink
 from sys import path
 from datetime import datetime
 import time
@@ -20,6 +20,16 @@ class FTPMethods(object):
     def __str__(self):
         print(f"FTP Methods Controller.")
         
+    
+    def get_files_lists(self, service):
+        files = []
+        # Configurando diretório de trabalho.
+        service.cwd(self.WORKDIR)
+        
+        # Listando os arquivos existentes.
+        service.dir(files.append)
+        
+        return files;
 
     # Busca pelo ultimo arquivo de backup armazenado no FTP.
     #
@@ -81,3 +91,34 @@ class FTPMethods(object):
                 # Caso não haja sucesso, será removida o arquivo de tentativa em storage/data.
                 if ph.isfile(file_name):
                     remove(file_name)
+                    
+                    
+    
+    # Exclusão de arquivos.
+    #
+    # @return void              
+    def remove_file(self, service, files):
+        # Carregando os arquivos mais antigos.
+        files_for_delete = files[:int(getenv("DELETE_FILES_NUMBER"))]
+        
+        # Configurando diretório de trabalho.
+        service.cwd(self.WORKDIR)
+        
+        # Percorrendos a lista de nomes enviado pelo controlador main.
+        for fs in files_for_delete:            
+            try:
+                # Carregando nome do arquivo.
+                self.LOCALFILE = fs.split()[-2]+ " " +fs.split()[-1]
+                
+                # Realizando a exclusão do aquivo.
+                service.delete(self.LOCALFILE)
+                
+                # Verificando se o arquivo existe para ser excluído no diretório do storage/data.
+                if ph.isfile(f"{self.STORAGEDIR}/{self.LOCALFILE}"):
+                    
+                    # Excluindo no diretório storage/data.
+                    unlink(f"{self.STORAGEDIR}/{self.LOCALFILE}")
+                    
+            except Exception as err:
+                print(f"[{datetime.today()}] Error: {err}")
+                continue
