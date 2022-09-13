@@ -59,8 +59,8 @@ if argv[1] == "load-onus":
                 methodFtp.remove_file(service=ftp_connection, files=files);
                 
             except Exception as err:
-                print(f"[{datetime.today()}] Error: {err}")  
-                      
+                print(f"[{datetime.today()}] Error: {err}")
+                continue      
             
         except Exception as err:
             print(f"[{datetime.today()}] Error: {err}")
