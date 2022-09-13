@@ -15,7 +15,7 @@ EnvConfig().load_env()
 
 # Verificando se foi informado algum argumento.
 if len(argv) <= 1:
-    print("Informe a ação que quer executar!")
+    print("Informe a ação que quer executar.")
     exit()
 
 # Iniciando processo de coleta.
@@ -45,10 +45,10 @@ if argv[1] == "load-onus":
                 svo = SaveONUs()
                 # Salvando os dados na base de dados.
                 svo.save_onus(fileName=methodFtp.LOCALFILE)
-                print(f"[{datetime.today()}] Success: Coleta salva com sucesso!")                
+                print(f"[{datetime.today()}] Success: Coleta salva com sucesso.")                
                                 
             else:            
-                print(f"[{datetime.today()}] Success: Nenhuma coleta encontrada!")    
+                print(f"[{datetime.today()}] Success: Nenhuma coleta encontrada.")    
                 
             # Realizando a exclusão dos arquivos antigos.
             try:
@@ -57,6 +57,8 @@ if argv[1] == "load-onus":
                 
                 # Realizando a remoção.
                 methodFtp.remove_file(service=ftp_connection, files=files);
+                
+                print(f"[{datetime.today()}] Success: Exclusão realizada com sucesso.")
                 
             except Exception as err:
                 print(f"[{datetime.today()}] Error: {err}")
@@ -68,4 +70,4 @@ if argv[1] == "load-onus":
         
 
 else: 
-    print("Informe uma ação válida!")
+    print("Informe uma ação válida.")
