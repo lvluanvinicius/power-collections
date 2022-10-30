@@ -1,6 +1,6 @@
 from os import getenv, path as ph, remove, unlink
 from sys import path
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 path.insert(0, "../") # Configure path.
 
@@ -16,6 +16,7 @@ class FTPMethods(object):
         self.WORKDIR = getenv("WORKDIR")
         self.STORAGEDIR = getenv("STORAGEDIR")
         self.LOCALFILE = ""
+        self.DAY_EXCLUDE = int(getenv("DAY_EXCLUDE"))
     
     def __str__(self):
         print(f"FTP Methods Controller.")
@@ -122,3 +123,7 @@ class FTPMethods(object):
             except Exception as err:
                 print(f"[{datetime.today()}] Error: {err}")
                 continue
+            
+    def get_before_date(self):        
+        date_now = datetime.now();
+        return (date_now - timedelta(days=self.DAY_EXCLUDE)).strftime("%Y-%m-%d %H:%M:%S")
