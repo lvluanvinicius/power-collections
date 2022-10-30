@@ -1,3 +1,5 @@
+from pymongo import MongoClient
+from Config.env import EnvConfig
 from os import getenv
 from sys import path
 
@@ -5,11 +7,7 @@ from sys import path
 path.insert(0, "../")
 
 # Carregando variáveis de ambiente.
-from Config.env import EnvConfig
 EnvConfig().load_env()
-
-
-from pymongo import MongoClient
 
 
 class MongoConnection (object):
@@ -20,13 +18,13 @@ class MongoConnection (object):
         self.PORT = getenv("MONGODB_PORT")
         self.HOST = getenv("MONGODB_HOST")
         self.DATABASE = getenv("MONGODB_DATABASE")
-    
+
     def client(self):
         """
             ...
         """
 
         # client=MongoClient(f"mongodb://{self.USERNAME}:{self.PASSWORD}@{self.HOST}:{self.PORT}")
-        client=MongoClient(f"mongodb://{self.HOST}:{self.PORT}/potencia?directConnection=true")
+        client = MongoClient(
+            f"mongodb://{self.HOST}:{self.PORT}/potencia?directConnection=true")
         return client
-        
