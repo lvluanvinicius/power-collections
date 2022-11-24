@@ -20,7 +20,7 @@ if len(argv) <= 1:
     exit()
 
 # Iniciando processo de coleta.
-if argv[1] == "load-onus":
+if argv[1] == "load-onus":    
     while True:
         sleep(int(getenv('UPDATE_TIME_LOADS_ONUS')))
         try:
@@ -34,6 +34,7 @@ if argv[1] == "load-onus":
             # Carregando Nome do Arquivo de acordo com o ultimo adicionado.
             methodFtp.LOCALFILE = methodFtp.get_file_name(
                 service=ftp_connection)
+            
 
             # Comparando se o arquivo já existe.
             if not methodFtp.compare_file():
@@ -49,27 +50,29 @@ if argv[1] == "load-onus":
                 # Salvando os dados na base de dados.
                 # svo.save_onus_mysql(fileName=methodFtp.LOCALFILE)
                 svo.save_onus_mongo(fileName=methodFtp.LOCALFILE)
-                print(f"[{datetime.today()}] Success: Coleta salva com sucesso.")
+                #print(f"[{datetime.today()}] Success: Coleta salva com sucesso.")
 
             else:
-                print(f"[{datetime.today()}] Success: Nenhuma coleta encontrada.")
+                pass
+                #print(f"[{datetime.today()}] Success: Nenhuma coleta encontrada.")
 
             # Realizando a exclusão dos arquivos antigos.
             try:
                 # Buscando a lista de arquivos.
                 files = methodFtp.get_files_lists(service=ftp_connection)
-
+                
                 # Realizando a remoção.
                 methodFtp.remove_file(service=ftp_connection, files=files)
 
-                print(
-                    f"[{datetime.today()}] Success: Exclusão realizada com sucesso.")
+                # print(f"[{datetime.today()}] Success: Exclusão realizada com sucesso.")
 
             except Exception as err:
+                print()
                 print(f"[{datetime.today()}] Error: {err}")
                 continue
 
         except Exception as err:
+            print()
             print(f"[{datetime.today()}] Error: {err}")
             continue
 
@@ -77,6 +80,15 @@ if argv[1] == "load-onus":
 # if argv[1] == "delete-history":
 #    dt_time = datetime.strptime(FTPMethods().get_before_date(), '%Y-%m-%d %H:%M:%S')
 #    afected = DeleteDataOnus().delete_data_onus(FTPMethods().get_before_date())
+
+
+if argv[1] == "test": 
+    methodFtp = FTPMethods()
+    ftp_connection = FTPService().connection()
+    methodFtp.LOCALFILE = methodFtp.get_file_name(
+                service=ftp_connection)
+    svo = SaveONUs()
+    svo.save_onus_mongo(fileName=methodFtp.LOCALFILE)
 
 else:
     print("Informe uma ação válida.")

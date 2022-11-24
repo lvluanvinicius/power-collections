@@ -59,7 +59,9 @@ class FTPMethods(object):
         data = f"{fileName.split('-')[1][:4]}-{fileName.split('-')[1][4:6]}-{fileName.split('-')[1][6:8]} {fileName.split('-')[2].split('_')[0][0:2]}:{fileName.split('-')[2].split('_')[0][2:4]}:{fileName.split('-')[2].split('_')[0][4:6]}"
         
         data2 = datetime.strptime(data, '%Y-%m-%d %H:%M:%S')
-        return (time.mktime(data2.timetuple()))
+        # return (time.mktime(data2.timetuple()))
+         
+        return data2
     
     # Verificação de existência do arquivo de configuração.
     # 

@@ -132,7 +132,7 @@ class SaveONUs(object):
             conn.close()
 
     def save_mongo(self, data, conn):
-        insert = conn.potencia.gpon_onus_dbm.insert_many(data)
+        conn.potencia.gpon_onus_dbm.insert_many(data)
 
     def save_onus_mongo(self, fileName):
         # Carregando data e hora de coleta.
@@ -158,7 +158,8 @@ class SaveONUs(object):
                         "ONUID": dataVar.ID,
                         "RXDBM": float(0.0),
                         "TXDBM": float(0.0),
-                        "COLLECTION_DATE": int(dataCollection)
+                        # "COLLECTION_DATE": int(dataCollection)
+                        "COLLECTION_DATE": dataCollection
                     }
 
                 else:
@@ -170,7 +171,8 @@ class SaveONUs(object):
                         "ONUID": dataVar.ID,
                         "RXDBM": dataVar.RXDBM,
                         "TXDBM": dataVar.TXDBM,
-                        "COLLECTION_DATE": int(dataCollection)
+                        # "COLLECTION_DATE": int(dataCollection)
+                        "COLLECTION_DATE": dataCollection
                     }
 
                 if "nan" in str(data["NAME"]):
@@ -180,6 +182,7 @@ class SaveONUs(object):
 
             # Enviando dados para serem salvos na base de dados.
             try:
+                
                 self.save_mongo(data=dataSave, conn=conn)
             except Exception as err:
                 print(f"Error: {err}")

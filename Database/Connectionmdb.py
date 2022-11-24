@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from Config.env import EnvConfig
 from os import getenv
 from sys import path
+import urllib
 
 # Configure path.
 path.insert(0, "../")
@@ -23,8 +24,7 @@ class MongoConnection (object):
         """
             ...
         """
-
-        # client=MongoClient(f"mongodb://{self.USERNAME}:{self.PASSWORD}@{self.HOST}:{self.PORT}")
-        client = MongoClient(
-            f"mongodb://{self.HOST}:{self.PORT}/potencia?directConnection=true")
+        # Criando conexão direta com o mongo db. 
+        client=MongoClient(port=int(self.PORT), host=self.HOST, password=self.PASSWORD, username=self.USERNAME, authSource='admin')
+        
         return client
