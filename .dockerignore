@@ -1,0 +1,7 @@
+.env
+.env.example
+.gitignore
+Dockerfile
+test.py
+mongo-data
+docker-compose.yml

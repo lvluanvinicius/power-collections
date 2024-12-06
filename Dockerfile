@@ -1,7 +1,9 @@
 FROM debian:11
 
-RUN apt-get update && apt-get install -y python3 python3-pip cron
-    
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y python3 python3-pip
+
 RUN python3 -m pip install mysql-connector-python==8.0.29 \
     numpy==1.23.2 \
     pandas==1.4.4 \
@@ -13,5 +15,6 @@ RUN python3 -m pip install mysql-connector-python==8.0.29 \
     dnspython==2.2.1 \
     pymongo==4.3.2 
 
+COPY . .
 
-CMD ["python3", "/app/main.py", "load-onus"]
+CMD ["python3", "main.py", "load-onus"]

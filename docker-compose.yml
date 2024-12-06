@@ -1,0 +1,20 @@
+services:
+  power-collections:
+    image: docker-registry.grupocednet.com.br/power-collection:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # volumes:
+    #   - ./:/app
+
+  power-mongo:
+    image: bitnami/mongodb:8.0
+    volumes:
+      - ./mongo-data:/bitnami/mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGODB_USERNAME=potencia
+      - MONGODB_PASSWORD=potencia
+      - MONGODB_ROOT_PASSWORD=potenciaroot
+    restart: always

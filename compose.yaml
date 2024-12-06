@@ -1,8 +1,0 @@
-version: '3.7'
-
-services:
-  potencia_agent:
-        image: potencia_agent:1.0
-
-        networks:
-                monitoring-network:

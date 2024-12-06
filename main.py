@@ -24,7 +24,6 @@ if argv[1] == "load-onus":
     while True:
         sleep(int(getenv('UPDATE_TIME_LOADS_ONUS')))
         try:
-
             # Criando Class Methods
             methodFtp = FTPMethods()
 
