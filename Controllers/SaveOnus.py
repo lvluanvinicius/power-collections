@@ -3,7 +3,7 @@ from os import getenv
 from sys import path
 from pandas import DataFrame, read_csv
 from Controllers.Methods import FTPMethods
-
+import logging
 from Database.Connection import MysqlConnection
 from Database.Connectionmdb import MongoConnection
 
@@ -13,6 +13,12 @@ path.insert(0, "../")
 # Carregando variáveis de ambiente.
 EnvConfig().load_env()
 
+# Configuração básica do logger
+logging.basicConfig(
+    filename='/app/logs/main.log',  # Caminho do arquivo de log
+    level=logging.DEBUG,              # Nível do log
+    format='%(asctime)s - %(levelname)s - %(message)s'  # Formato da mensagem
+)
 
 class SaveONUs(object):
 
@@ -126,6 +132,7 @@ class SaveONUs(object):
                     self.save_mysql(
                         data=data, dataCollection=dataCollection, conn=conn)
                 except Exception as err:
+                    logging.error(f"Erro ao parsear linha: {err}")
                     print(f"Error: {err}")
                     continue
 
@@ -182,9 +189,9 @@ class SaveONUs(object):
 
             # Enviando dados para serem salvos na base de dados.
             try:
-                
                 self.save_mongo(data=dataSave, conn=conn)
             except Exception as err:
+                logging.error(f"Erro ao parsear linha: {err}")
                 print(f"Error: {err}")
 
             conn.close()

@@ -5,3 +5,4 @@ Dockerfile
 test.py
 mongo-data
 docker-compose.yml
+mongo

@@ -7,11 +7,19 @@ from os import getenv
 from sys import path, argv
 from time import sleep
 from datetime import datetime
+import logging
+ 
 path.insert(0, ".")  # Configure path.
-
 
 # Carregando variáveis de ambiente.
 EnvConfig().load_env()
+
+# Configuração básica do logger
+logging.basicConfig(
+    filename='/app/logs/main.log',  # Caminho do arquivo de log
+    level=logging.DEBUG,              # Nível do log
+    format='%(asctime)s - %(levelname)s - %(message)s'  # Formato da mensagem
+)
 
 
 # Verificando se foi informado algum argumento.
@@ -49,11 +57,10 @@ if argv[1] == "load-onus":
                 # Salvando os dados na base de dados.
                 # svo.save_onus_mysql(fileName=methodFtp.LOCALFILE)
                 svo.save_onus_mongo(fileName=methodFtp.LOCALFILE)
-                #print(f"[{datetime.today()}] Success: Coleta salva com sucesso.")
+                logging.info(f"Success: Coleta salva com sucesso.")
 
             else:
-                pass
-                #print(f"[{datetime.today()}] Success: Nenhuma coleta encontrada.")
+                logging.info(f"Success: Nenhuma coleta encontrada.")
 
             # Realizando a exclusão dos arquivos antigos.
             try:
@@ -66,11 +73,13 @@ if argv[1] == "load-onus":
                 # print(f"[{datetime.today()}] Success: Exclusão realizada com sucesso.")
 
             except Exception as err:
+                logging.error(f"Erro ao parsear linha: {err}")
                 print()
                 print(f"[{datetime.today()}] Error: {err}")
                 continue
 
         except Exception as err:
+            logging.error(f"Erro ao parsear linha: {err}")
             print()
             print(f"[{datetime.today()}] Error: {err}")
             continue

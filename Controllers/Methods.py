@@ -1,7 +1,6 @@
 from os import getenv, path as ph, remove, unlink
 from sys import path
 from datetime import datetime, timedelta
-import time
 path.insert(0, "../") # Configure path.
 
 
@@ -30,7 +29,7 @@ class FTPMethods(object):
         # Listando os arquivos existentes.
         service.dir(files.append)
         
-        return files;
+        return files
 
     # Busca pelo ultimo arquivo de backup armazenado no FTP.
     #
